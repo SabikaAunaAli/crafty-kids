@@ -195,7 +195,7 @@ const Activities = () => {
               <div className="position-relative">
                 <img
                   src="/images/multi_triangles.png"
-                  className="img-fluid position-absolute end-0 multi_triangles"
+                  className="img-fluid end-0 multi_triangles"
                   alt=""
                 />
 
