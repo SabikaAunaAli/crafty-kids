@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import { AGE_OPTIONS } from "../../common/utility";
+// import { AGE_OPTIONS } from "../../common/utility";
 
 const Terms = () => {
   const openNav = () => {
@@ -73,7 +73,7 @@ const Terms = () => {
                   </li>
                 </ul>
               </div>
-              <div className="col-md-2 filter">
+              {/* <div className="col-md-2 filter">
                 <div className="dropdown">
                   <button
                     className="dropdown_button"
@@ -96,7 +96,7 @@ const Terms = () => {
                     ))}
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="kids-breadcrumb">
               <Link href="/">Home</Link> <img alt="" src="./images/brd.svg" />
