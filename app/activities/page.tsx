@@ -156,7 +156,7 @@ const Activities = () => {
               <img src="images/cloud.png" className="cloud img-fluid" alt="" />
             </div>
             <h4 className="card_heading ml-3">Most Popular</h4>
-            <div className="row ">
+            <div className="row pb-4">
               {blogs.slice(0, 3).map((blog: any, index: any) => (
                 <div className="col-md-4 mb-4" key={index}>
                   <Link href={`/activities/${blog.id}`}>

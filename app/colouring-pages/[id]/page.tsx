@@ -145,7 +145,7 @@ const Detail = () => {
             {loading ? (
               <p>Loading...</p>
             ) : blogDetail ? (
-              <div>
+              <div className="">
                 <h1>{blogDetail.metaTitle}</h1>
                 <div className="crausel">
                   <div className="row">
@@ -154,6 +154,13 @@ const Detail = () => {
                         <div className="slide">
                           <h2>
                             {blogDetail.metaTitle}
+                            <div >
+                            <img className="w-50" src={blogDetail.fullFileUrl} alt="Dynamic Image" />
+
+                            </div>
+                          
+
+
                             <img
                               alt=""
                               className="p-one"
@@ -168,7 +175,7 @@ const Detail = () => {
                           <span className="p-three-top">
                             <img alt="" src="/images/p3.svg" />
                           </span>
-                          <p>{blogDetail.shortDescription}</p>
+                          <p className="mb-5">{blogDetail.shortDescription}</p>
 
                           <br />
                           <div
@@ -176,7 +183,8 @@ const Detail = () => {
                               __html: blogDetail.metaDescription,
                             }}
                           ></div>
-                          <div className="slide-btn">
+                       
+                       <div className="slide-btn">
                             <Link href="">
                               <button
                                 onClick={() =>
@@ -197,7 +205,10 @@ const Detail = () => {
                               src="/images/preview.svg"
                             />
                           </div>
+                       
+                       
                         </div>
+                          
                       </div>
                       <div className="p-bottom">
                         <img
@@ -221,6 +232,7 @@ const Detail = () => {
                     </div>
                   </div>
                 </div>
+
               </div>
             ) : (
               <p>No details available.</p>

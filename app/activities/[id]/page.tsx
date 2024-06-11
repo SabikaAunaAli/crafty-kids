@@ -132,9 +132,9 @@ const Detail = () => {
                 <h1>{blogDetail.metaTitle}</h1>
                 <div className="crausel">
                   <div className="row">
-                    <div className="col-md-9 filter">
+                    <div className="col">
                       <div className="slide-bg">
-                        <div className="slide">
+                        <div className="slide ">
                           <h2>
                             {blogDetail.metaTitle}
                             <img

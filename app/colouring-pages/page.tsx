@@ -72,7 +72,7 @@ const ColouringPages = () => {
   return (
     <React.Fragment>
       <header>
-      <div className="navigation">
+      <div className="navigation nav-bg">
           <div className="container">
             <div className="row">
               <div className="col-md-2">
@@ -184,7 +184,7 @@ const ColouringPages = () => {
                 </div>
               ))}
             </div>
-            <h4 className="card_heading ml-5 pl-5 pb-3">Recent Posts</h4>
+            <h4 className="card_heading">Recent Posts</h4>
             <div className="row">
               {blogs.slice(3).map((blog: any, index: any) => (
                 <div className="col-md-4 mb-5" key={index}>

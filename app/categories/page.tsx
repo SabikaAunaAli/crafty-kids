@@ -140,7 +140,7 @@ const Categories = () => {
               <h2>CRAFT</h2>
 
               <h4 className="card_heading">Most Popular</h4>
-              <div className="row pb-4">
+              <div className="row ">
                 {blogs.slice(0, 3).map((blog: any, index: any) => (
                   <div className="col-md-4 mb-4" key={index}>
                     <Link href={`/categories/${blog.id}`}>

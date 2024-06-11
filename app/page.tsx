@@ -6,32 +6,7 @@ import { GetAllAge, GetAllBlog } from "./services/colouring";
 export default function Home() {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setMenuOpen(!isMenuOpen);
-  };
 
-  const [age, setAge] = useState([]);
-  const [activities, setActivities] = useState([]);
-  const [colouring, setColouring] = useState([]);
-  const [craft, setCraft] = useState([]);
-  const [colouringName, setColouringName] = useState("");
-  const [colouringNameSecond, setColouringNameSecond] = useState("");
-  const [colouringNameThird, setColouringNameThird] = useState("");
-  const [activityName, setActivityName] = useState("");
-  const [activityNameSecond, setActivityNameSecond] = useState("");
-  const [activityNameThird, setActivityNameThird] = useState("");
-  const [craftName, setCraftName] = useState("");
-  const [craftNameSecond, setCraftNameSecond] = useState("");
-  const [craftNameThird, setCraftNameThird] = useState("");
-  const [activityDetail, setActivityDetail] = useState("");
-  const [activityDetailSecond, setActivityDetailSecond] = useState("");
-  const [activityDetailThird, setActivityDetailThird] = useState("");
-  const [colouringDetail, setColouringDetail] = useState("");
-  const [colouringDetailSecond, setColouringDetailSecond] = useState("");
-  const [colouringDetailThird, setColouringDetailThird] = useState("");
-  const [craftDetail, setCraftDetail] = useState("");
-  const [craftDetailSecond, setCraftDetailSecond] = useState("");
-  const [craftDetailThird, setCraftDetailThird] = useState("");
 
   const openNav = () => {
     const el = document.getElementById("mySidenav");
@@ -47,127 +22,72 @@ export default function Home() {
     }
   };
 
-  const fetchActivity = async () => {
+  // const fetchActivity = async () => {
+  //   try {
+  //     const response = await GetAllBlog({
+  //       pageNumber: 1,
+  //       pageSize: 10,
+  //       type: "Activity",
+  //     });
+  //     if (response.statusCode === 200) {
+  //       setBlogs(response.data.items);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchActivity();
+   
+  // }, []);
+
+  const [activities, setActivities] = useState([]);
+  const [crafts, setCrafts] = useState([]);
+  const [colourings, setColourings] = useState([]);
+  const [mySlug, setMySlug] = useState(null);
+
+  const fetchAllBlogs = async () => {
     try {
-      const response = await GetAllBlog({
-        pageNumber: 1,
-        pageSize: 3,
-        type: "Activity",
-      });
-      if (response.statusCode === 200) {
-        setActivities(response.data.items);
-        if (response.data.items && response.data.items.length > 0) {
-          setActivityName(response.data.items[0].metaTitle);
-          setActivityDetail(response.data.items[0].shortDescription);
-        }
-        if (response.data.items && response.data.items.length > 0) {
-          setActivityNameSecond(response.data.items[1].metaTitle);
-          setActivityDetailSecond(response.data.items[1].shortDescription);
-        }
-        if (response.data.items && response.data.items.length > 0) {
-          setActivityNameThird(response.data.items[2].metaTitle);
-          setActivityDetailThird(response.data.items[2].shortDescription);
-        }
+      const [activitiesResponse, craftsResponse, colouringsResponse] = await Promise.all([
+        GetAllBlog({ pageNumber: 1, pageSize: 10, type: 'Activity' }),
+        GetAllBlog({ pageNumber: 1, pageSize: 10, type: 'Craft' }),
+        GetAllBlog({ pageNumber: 1, pageSize: 10, type: 'Colouring Page' }),
+      ]);
+
+      setActivities(activitiesResponse.data.items);
+      setCrafts(craftsResponse.data.items);
+      setColourings(colouringsResponse.data.items);
+
+      // Assuming slug is only available in colouring pages
+      if (colouringsResponse.data.items.length > 0) {
+        setMySlug(colouringsResponse.data.items[0].slug);
       }
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  const fetchColouring = async () => {
-    try {
-      const response = await GetAllBlog({
-        pageNumber: 1,
-        pageSize: 3,
-        type: "Colouring Page",
-      });
-      if (response.statusCode === 200) {
-        setColouring(response.data.items);
-        if (response.data.items && response.data.items.length > 0) {
-          setColouringName(response.data.items[0].metaTitle);
-          setColouringDetail(response.data.items[0].shortDescription);
-        }
-        if (response.data.items && response.data.items.length > 0) {
-          setColouringNameSecond(response.data.items[1].metaTitle);
-          setColouringDetailSecond(response.data.items[1].shortDescription);
-        }
-        if (response.data.items && response.data.items.length > 0) {
-          setColouringNameThird(response.data.items[2].metaTitle);
-          setColouringDetailThird(response.data.items[2].shortDescription);
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchCraft = async () => {
-    try {
-      const response = await GetAllBlog({
-        pageNumber: 1,
-        pageSize: 3,
-        type: "Craft",
-      });
-      if (response.statusCode === 200) {
-        setCraft(response.data.items);
-        if (response.data.items && response.data.items.length > 0) {
-          setCraftName(response.data.items[0].metaTitle);
-          setCraftDetail(response.data.items[0].shortDescription);
-        }
-        if (response.data.items && response.data.items.length > 0) {
-          setCraftNameSecond(response.data.items[1].metaTitle);
-          setCraftDetailSecond(response.data.items[1].shortDescription);
-        }
-        if (response.data.items && response.data.items.length > 0) {
-          setCraftNameThird(response.data.items[2].metaTitle);
-          setCraftDetailThird(response.data.items[2].shortDescription);
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchAge = async () => {
-    try {
-      const response = await GetAllAge({
-        pageNumber: 1,
-        pageSize: 100,
-        filters: "",
-        query: "",
-      });
-      if (response.statusCode === 200) {
-        setAge(
-          response.data.items.map((item: any) => {
-            return {
-              label: item.name,
-              value: item.id,
-            };
-          })
-        );
-      }
-    } catch (error: any) {
-      console.log("error", error);
     }
   };
 
   useEffect(() => {
-    fetchActivity();
-    fetchColouring();
-    fetchCraft();
-    fetchAge();
+    fetchAllBlogs();
   }, []);
+
+
+
+
+
+
 
   return (
     <React.Fragment>
       <header>
-      <div className="navigation">
+        <div className="navigation">
           <div className="container">
             <div className="row">
               <div className="col-md-2">
                 <div className="logo d-flex justify-content-between">
                   <Link href="/">
-                  <img
+                    <img
                       alt="image"
                       className="img-fluid"
                       src="images/Vector.png"
@@ -190,7 +110,11 @@ export default function Home() {
                       <Link href="/categories">Craft</Link>
                     </div>
                     <span
-                      style={{ fontSize: "30px", cursor: "pointer", display: "inline-block"  }}
+                      style={{
+                        fontSize: "30px",
+                        cursor: "pointer",
+                        display: "inline-block",
+                      }}
                       onClick={openNav}
                     >
                       &#9776;
@@ -219,21 +143,21 @@ export default function Home() {
                   </li>
                 </ul>
               </div>
-             
             </div>
-           
           </div>
         </div>
-
-       
       </header>
       <div className="home">
         <div className="banner">
           <div className="container">
             <div className="row">
               <div className="col-md-6">
-                <h1 className="homepage-heading">Where Playful Learning Takes Center Stage</h1>
-                <span className="sub-tittle ">Discover fun activities for kids of all age</span>
+                <h1 className="homepage-heading">
+                  Where Playful Learning Takes Center Stage
+                </h1>
+                <span className="sub-tittle ">
+                  Discover fun activities for kids of all age
+                </span>
                 <Link href="/activities">
                   <button>Explore Activities</button>
                 </Link>
@@ -265,7 +189,9 @@ export default function Home() {
               />
             </div>
             <h1>Latest Activities</h1>
-            <span className="sub-tittle ">Engage Kids with New and Exciting Projects</span>
+            <span className="sub-tittle ">
+              Engage Kids with New and Exciting Projects
+            </span>
             <div className="_activity_right_images">
               <img
                 src="/images/cloud.png"
@@ -311,183 +237,41 @@ export default function Home() {
                 className="position-absolute dotted"
                 alt="cross icon"
               />
-              <div className="col-md-4 mb-3">
-                <Link href="/activities/paper-craft">
-                  <div className="actvity-inner orange">
-                    <div className="act-top">
-                      <img src="/images/art1.png" alt="Paper Art" />
-                    </div>
-                    <h3>{activityName}</h3>
-                    <span>{activityDetail}</span>
-                    <a href="javascript:void()" className="mb-3 mr-3">
-                      View Details
-                      <img
-                        src="/images/arrow.svg"
-                        className="ml-2"
-                        alt="Arrow Icon"
-                      />
-                    </a>
-                  </div>
-                  <img
-                    src="/images/p3.svg"
-                    className="scissors"
-                    alt="Paper Art"
-                  />
-                </Link>
-              </div>
 
-              <div className="col-md-4 mb-3">
-                <Link href="/activities/paper-craft">
-                  <div className="actvity-inner yellow">
-                    <div className="act-top">
-                      <img src="/images/art2.png" alt="Card Painting" />
-                    </div>
-                    <h3>{activityNameSecond}</h3>
-                    <span>{activityDetailSecond} </span>
-                    <a href="javascript:void()" className="mb-3 mr-3">
-                      View Details
-                      <img
-                        src="/images/arrow.svg"
-                        className="ml-2"
-                        alt="Arrow Icon"
-                      />
-                    </a>
+              <div className="row">
+                {activities.slice(1, 4).map((blog: any, index: number) => (
+                  <div className="col-md-4 mb-5" key={index}>
+                    <Link href={`/activities/${blog.id}`}>
+                      <div
+                        className={`actvity-inner  ${
+                          index % 3 == 0
+                            ? "orange"
+                            : index % 3 == 1
+                            ? "yellow"
+                            : "blue"
+                        }`}
+                      >
+                        <div className="act-top">
+                          <img alt="" src="/images/art2.png" />
+                        </div>
+                        <h3>{blog.metaTitle}</h3>
+                        <span>{blog.shortDescription}</span>
+                        <Link href={`/activities/${blog.id}`}>
+                          View Details
+                          <img
+                            alt=""
+                            className="mr-2 p-2"
+                            src="/images/arrow.svg"
+                          />
+                        </Link>
+                      </div>
+                    </Link>
                   </div>
-                </Link>
-              </div>
-              <div className="col-md-4 mb-3">
-                <Link href="/activities/craft">
-                  <div className="actvity-inner blue">
-                    <div className="act-top">
-                      <img src="/images/art3.png" alt="Craft" />
-                    </div>
-                    <h3>{activityNameThird}</h3>
-                    <span>{activityDetailThird}</span>
-                    <a href="javascript:void()" className="mb-3 mr-3">
-                      View Details
-                      <img
-                        src="/images/arrow.svg"
-                        className="ml-2"
-                        alt="Arrow Icon"
-                      />
-                    </a>
-                  </div>
-                </Link>
+                ))}
               </div>
             </div>
           </div>
         </div>
-
-        {/* <div className="category  text-center">
-          <div className="catbtn-bg">
-            <div className="container">
-              <h1>Top Colouring Pages</h1>
-              <span className="sub-tittle ">Explore Our Most Popular Coloring Sheets</span>
-              <div className="view-all">
-                <Link href="/activities">
-                  View All
-                  <img
-                    src="/images/viewall.svg"
-                    className="ml-2"
-                    alt="View All Icon"
-                  />
-                </Link>
-              </div>
-              <div className="row">
-                <div className="col-md-4">
-                  <div className="card card-first">
-                    <img
-                      src="/images/card_image1.png"
-                      className="card-img-top"
-                      alt="..."
-                    />
-                    <div className="card-body">
-                      <svg
-                        className="wave"
-                        viewBox="0 0 1440 390"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        preserveAspectRatio="none"
-                      >
-                        <path d="M 0,400 L 0,150 C 128,113.19999999999999 256,76.39999999999999 442,97 C 628,117.60000000000001 872,195.60000000000002 1048,214 C 1224,232.39999999999998 1332,191.2 1440,150 L 1440,400 L 0,400 Z"></path>
-                      </svg>
-                      <h5 className="card-title">{colouringName}</h5>
-                      <div className="d-flex align-items-center ">
-                        <p className="card-text">{colouringDetail}</p>
-                        <Link
-                          href="/activities/paper-craft"
-                          className="card_link_btn stretched-link"
-                        >
-                          <i className="fa-solid fa-arrow-right text-light "></i>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4">
-                  <div className="card card-second">
-                    <img
-                      src="/images/card_image2.png"
-                      className="card-img-top"
-                      alt="..."
-                    />
-                    <div className="card-body">
-                      <svg
-                        className="wave"
-                        viewBox="0 0 1440 390"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        preserveAspectRatio="none"
-                      >
-                        <path d="M 0,400 L 0,150 C 128,113.19999999999999 256,76.39999999999999 442,97 C 628,117.60000000000001 872,195.60000000000002 1048,214 C 1224,232.39999999999998 1332,191.2 1440,150 L 1440,400 L 0,400 Z"></path>
-                      </svg>
-                      <h5 className="card-title">{colouringNameSecond}</h5>
-                      <div className="d-flex align-items-center ">
-                        <p className="card-text">{colouringDetailSecond}</p>
-                        <Link
-                          href="/activities/paper-craft"
-                          className="card_link_btn stretched-link"
-                        >
-                          <i className="fa-solid fa-arrow-right text-light "></i>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4">
-                  <div className="card card-third">
-                    <img
-                      src="/images/card_image3.png"
-                      className="card-img-top"
-                      alt="..."
-                    />
-                    <div className="card-body">
-                      <svg
-                        className="wave"
-                        viewBox="0 0 1440 390"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        preserveAspectRatio="none"
-                      >
-                        <path d="M 0,400 L 0,150 C 128,113.19999999999999 256,76.39999999999999 442,97 C 628,117.60000000000001 872,195.60000000000002 1048,214 C 1224,232.39999999999998 1332,191.2 1440,150 L 1440,400 L 0,400 Z"></path>
-                      </svg>
-                      <h5 className="card-title">{colouringNameThird}</h5>
-                      <div className="d-flex align-items-center ">
-                        <p className="card-text">{colouringDetailThird}</p>
-                        <Link
-                          href="/activities/paper-craft"
-                          className="card_link_btn stretched-link"
-                        >
-                          <i className="fa-solid fa-arrow-right text-light "></i>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
 
         <div className="latest_craft text-center">
           <div className="container">
@@ -497,12 +281,13 @@ export default function Home() {
               alt="Activities"
             />
             <h1>Latest Crafts</h1>
-            <span className="sub-tittle ">Discover Creative Crafts to Spark Imagination
+            <span className="sub-tittle ">
+              Discover Creative Crafts to Spark Imagination
             </span>
             <img className="cImage" src="/images/c.png" alt="Activities" />
 
             <div className="view-all">
-              <Link href="/activities">
+              <Link href="/categories">
                 View All
                 <img
                   src="/images/viewall.svg"
@@ -511,7 +296,7 @@ export default function Home() {
                 />
               </Link>
             </div>
-            <div className="row position-relative">
+            {/* <div className="row position-relative">
               <div className="col-md-4 mb-3 mb-3">
                 <Link href="/activities/paper-craft">
                   <div className="latest_craft-inner orange">
@@ -575,7 +360,43 @@ export default function Home() {
                   </div>
                 </Link>
               </div>
-            </div>
+            </div> */}
+
+
+<div className="row pb-4">
+                {crafts.slice(3-6).map((blog: any, index: any) => (
+                  <div className="col-md-4 mb-4" key={index}>
+                    <Link href={`/categories/${blog.id}`}>
+                      <div
+                        className={`actvity-inner  ${
+                          index % 3 == 0
+                            ? "blue"
+                            : index % 3 == 1
+                            ? "orange"
+                            : "yellow"
+                        }`}
+                      >
+                        <div className="act-top">
+                          <img alt="" src="/images/art2.png" />
+                        </div>
+                        <h3>{blog.metaTitle}</h3>
+                        <span>{blog.shortDescription}</span>
+                        <Link href={`/categories/${blog.id}`}>
+                          View Details
+                          <img
+                            alt=""
+                            className="mr-2 p-2"
+                            src="/images/arrow.svg"
+                          />
+                        </Link>
+                      </div>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+
+
+
           </div>
         </div>
 
@@ -583,7 +404,9 @@ export default function Home() {
           <div className="catbtn-bg">
             <div className="container">
               <h1>Top Colouring Pages</h1>
-              <span className="sub-tittle ">Explore Our Most Popular Coloring Sheets</span>
+              <span className="sub-tittle ">
+                Explore Our Most Popular Coloring Sheets
+              </span>
               <div className="view-all">
                 <Link href="/activities">
                   View All
@@ -595,12 +418,21 @@ export default function Home() {
                 </Link>
               </div>
               <div className="row">
-                <div className="col-md-4">
-                  <div className="card card-first">
+              {colourings.slice(0-3).map((blog: any, index: any) => (
+                <div className="col-md-4 mb-5" key={index}>
+                  <div
+                    className={`card ${
+                      index % 3 == 0
+                        ? "card-first"
+                        : index % 3 == 1
+                        ? "card-second"
+                        : "card-third"
+                    }`}
+                  >
                     <img
-                      src="/images/card_image1.png"
+                      src={blog.fullFileUrl || "/images/default_image.png"}
                       className="card-img-top"
-                      alt="..."
+                      alt="Blog image"
                     />
                     <div className="card-body">
                       <svg
@@ -612,84 +444,24 @@ export default function Home() {
                       >
                         <path d="M 0,400 L 0,150 C 128,113.19999999999999 256,76.39999999999999 442,97 C 628,117.60000000000001 872,195.60000000000002 1048,214 C 1224,232.39999999999998 1332,191.2 1440,150 L 1440,400 L 0,400 Z"></path>
                       </svg>
-                      <h5 className="card-title">{colouringName}</h5>
-                      <div className="d-flex align-items-center ">
-                        <p className="card-text">{colouringDetail}</p>
+                      <h5 className="card-title">{blog.metaTitle}</h5>
+                      <div className="d-flex align-items-center">
+                        <p className="card-text">{blog.shortDescription}</p>
                         <Link
-                          href="/activities/paper-craft"
+                          href={`/colouring-pages/${blog.id}`}
                           className="card_link_btn stretched-link"
                         >
-                          <i className="fa-solid fa-arrow-right text-light "></i>
+                          <i className="fa-solid fa-arrow-right text-light"></i>
                         </Link>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-md-4">
-                  <div className="card card-second">
-                    <img
-                      src="/images/card_image2.png"
-                      className="card-img-top"
-                      alt="..."
-                    />
-                    <div className="card-body">
-                      <svg
-                        className="wave"
-                        viewBox="0 0 1440 390"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        preserveAspectRatio="none"
-                      >
-                        <path d="M 0,400 L 0,150 C 128,113.19999999999999 256,76.39999999999999 442,97 C 628,117.60000000000001 872,195.60000000000002 1048,214 C 1224,232.39999999999998 1332,191.2 1440,150 L 1440,400 L 0,400 Z"></path>
-                      </svg>
-                      <h5 className="card-title">{colouringNameSecond}</h5>
-                      <div className="d-flex align-items-center ">
-                        <p className="card-text">{colouringDetailSecond}</p>
-                        <Link
-                          href="/activities/paper-craft"
-                          className="card_link_btn stretched-link"
-                        >
-                          <i className="fa-solid fa-arrow-right text-light "></i>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4">
-                  <div className="card card-third">
-                    <img
-                      src="/images/card_image3.png"
-                      className="card-img-top"
-                      alt="..."
-                    />
-                    <div className="card-body">
-                      <svg
-                        className="wave"
-                        viewBox="0 0 1440 390"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        preserveAspectRatio="none"
-                      >
-                        <path d="M 0,400 L 0,150 C 128,113.19999999999999 256,76.39999999999999 442,97 C 628,117.60000000000001 872,195.60000000000002 1048,214 C 1224,232.39999999999998 1332,191.2 1440,150 L 1440,400 L 0,400 Z"></path>
-                      </svg>
-                      <h5 className="card-title">{colouringNameThird}</h5>
-                      <div className="d-flex align-items-center ">
-                        <p className="card-text">{colouringDetailThird}</p>
-                        <Link
-                          href="/activities/paper-craft"
-                          className="card_link_btn stretched-link"
-                        >
-                          <i className="fa-solid fa-arrow-right text-light "></i>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ))}
+            </div>
             </div>
           </div>
         </div>
-
       </div>
       <div className="copyright">
         <div className="container">
