@@ -6,8 +6,6 @@ import { GetAllAge, GetAllBlog } from "./services/colouring";
 export default function Home() {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
-
-
   const openNav = () => {
     const el = document.getElementById("mySidenav");
     if (el) {
@@ -39,7 +37,7 @@ export default function Home() {
 
   // useEffect(() => {
   //   fetchActivity();
-   
+
   // }, []);
 
   const [activities, setActivities] = useState([]);
@@ -49,11 +47,12 @@ export default function Home() {
 
   const fetchAllBlogs = async () => {
     try {
-      const [activitiesResponse, craftsResponse, colouringsResponse] = await Promise.all([
-        GetAllBlog({ pageNumber: 1, pageSize: 10, type: 'Activity' }),
-        GetAllBlog({ pageNumber: 1, pageSize: 10, type: 'Craft' }),
-        GetAllBlog({ pageNumber: 1, pageSize: 10, type: 'Colouring Page' }),
-      ]);
+      const [activitiesResponse, craftsResponse, colouringsResponse] =
+        await Promise.all([
+          GetAllBlog({ pageNumber: 1, pageSize: 10, type: "Activity" }),
+          GetAllBlog({ pageNumber: 1, pageSize: 10, type: "Craft" }),
+          GetAllBlog({ pageNumber: 1, pageSize: 10, type: "Colouring Page" }),
+        ]);
 
       setActivities(activitiesResponse.data.items);
       setCrafts(craftsResponse.data.items);
@@ -71,12 +70,6 @@ export default function Home() {
   useEffect(() => {
     fetchAllBlogs();
   }, []);
-
-
-
-
-
-
 
   return (
     <React.Fragment>
@@ -238,7 +231,7 @@ export default function Home() {
                 alt="cross icon"
               />
 
-              <div className="row">
+              <div className="row  m-2">
                 {activities.slice(1, 4).map((blog: any, index: number) => (
                   <div className="col-md-4 mb-5" key={index}>
                     <Link href={`/activities/${blog.id}`}>
@@ -296,107 +289,39 @@ export default function Home() {
                 />
               </Link>
             </div>
-            {/* <div className="row position-relative">
-              <div className="col-md-4 mb-3 mb-3">
-                <Link href="/activities/paper-craft">
-                  <div className="latest_craft-inner orange">
-                    <div className="act-top">
-                      <img src="/images/art1.png" alt="Paper Art" />
-                    </div>
-                    <h3>{craftName}</h3>
-                    <span>{craftDetail} </span>
-                    <a href="javascript:void()" className="mb-3 mr-3">
-                      View Details
-                      <img
-                        src="/images/arrow.svg"
-                        className="ml-2"
-                        alt="Arrow Icon"
-                      />
-                    </a>
-                  </div>
-                </Link>
-              </div>
+         
 
-              <div className="col-md-4 mb-3 mb-3">
-                <Link href="/activities/paper-craft">
-                  <div className="latest_craft-inner yellow">
-                    <div className="act-top">
-                      <img src="/images/art2.png" alt="Card Painting" />
-                    </div>
-                    <h3>{craftNameSecond}</h3>
-                    <span>{craftDetailSecond}</span>
-                    <a href="javascript:void()" className="mb-3 mr-3">
-                      View Details
-                      <img
-                        src="/images/arrow.svg"
-                        className="ml-2"
-                        alt="Arrow Icon"
-                      />
-                    </a>
-                  </div>
-                </Link>
-              </div>
-              <div className="col-md-4 mb-3">
-                <Link href="/activities/craft">
-                  <div className="latest_craft-inner blue">
-                    <div className="act-top">
-                      <img src="/images/art3.png" alt="Craft" />
-                    </div>
-                    <h3>{craftNameThird}</h3>
-                    <span>{craftDetailThird}</span>
-                    <a href="javascript:void()" className="mb-3 mr-3">
-                      View Details
-                      <img
-                        src="/images/arrow.svg"
-                        className="ml-2"
-                        alt="Arrow Icon"
-                      />
-                    </a>
-                    <img
-                      className="actvt"
-                      src="/images/ac3.svg"
-                      alt="Activity"
-                    />
-                  </div>
-                </Link>
-              </div>
-            </div> */}
-
-
-<div className="row pb-4">
-                {crafts.slice(3-6).map((blog: any, index: any) => (
-                  <div className="col-md-4 mb-4" key={index}>
-                    <Link href={`/categories/${blog.id}`}>
-                      <div
-                        className={`actvity-inner  ${
-                          index % 3 == 0
-                            ? "blue"
-                            : index % 3 == 1
-                            ? "orange"
-                            : "yellow"
-                        }`}
-                      >
-                        <div className="act-top">
-                          <img alt="" src="/images/art2.png" />
-                        </div>
-                        <h3>{blog.metaTitle}</h3>
-                        <span>{blog.shortDescription}</span>
-                        <Link href={`/categories/${blog.id}`}>
-                          View Details
-                          <img
-                            alt=""
-                            className="mr-2 p-2"
-                            src="/images/arrow.svg"
-                          />
-                        </Link>
+            <div className="row m-2">
+              {crafts.slice(3 - 6).map((blog: any, index: any) => (
+                <div className="col-md-4 mb-4" key={index}>
+                  <Link href={`/categories/${blog.id}`}>
+                    <div
+                      className={`actvity-inner  ${
+                        index % 3 == 0
+                          ? "blue"
+                          : index % 3 == 1
+                          ? "orange"
+                          : "yellow"
+                      }`}
+                    >
+                      <div className="act-top">
+                        <img alt="" src="/images/art2.png" />
                       </div>
-                    </Link>
-                  </div>
-                ))}
-              </div>
-
-
-
+                      <h3>{blog.metaTitle}</h3>
+                      <span>{blog.shortDescription}</span>
+                      <Link href={`/categories/${blog.id}`}>
+                        View Details
+                        <img
+                          alt=""
+                          className="mr-2 p-2"
+                          src="/images/arrow.svg"
+                        />
+                      </Link>
+                    </div>
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -418,47 +343,47 @@ export default function Home() {
                 </Link>
               </div>
               <div className="row">
-              {colourings.slice(0-3).map((blog: any, index: any) => (
-                <div className="col-md-4 mb-5" key={index}>
-                  <div
-                    className={`card ${
-                      index % 3 == 0
-                        ? "card-first"
-                        : index % 3 == 1
-                        ? "card-second"
-                        : "card-third"
-                    }`}
-                  >
-                    <img
-                      src={blog.fullFileUrl || "/images/default_image.png"}
-                      className="card-img-top"
-                      alt="Blog image"
-                    />
-                    <div className="card-body">
-                      <svg
-                        className="wave"
-                        viewBox="0 0 1440 390"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        preserveAspectRatio="none"
-                      >
-                        <path d="M 0,400 L 0,150 C 128,113.19999999999999 256,76.39999999999999 442,97 C 628,117.60000000000001 872,195.60000000000002 1048,214 C 1224,232.39999999999998 1332,191.2 1440,150 L 1440,400 L 0,400 Z"></path>
-                      </svg>
-                      <h5 className="card-title">{blog.metaTitle}</h5>
-                      <div className="d-flex align-items-center">
-                        <p className="card-text">{blog.shortDescription}</p>
-                        <Link
-                          href={`/colouring-pages/${blog.id}`}
-                          className="card_link_btn stretched-link"
+                {colourings.slice(0 - 3).map((blog: any, index: any) => (
+                  <div className="col-md-4 mb-5" key={index}>
+                    <div
+                      className={`card ${
+                        index % 3 == 0
+                          ? "card-first"
+                          : index % 3 == 1
+                          ? "card-second"
+                          : "card-third"
+                      }`}
+                    >
+                      <img
+                        src={blog.fullFileUrl || "/images/default_image.png"}
+                        className="card-img-top"
+                        alt="Blog image"
+                      />
+                      <div className="card-body">
+                        <svg
+                          className="wave"
+                          viewBox="0 0 1440 390"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          preserveAspectRatio="none"
                         >
-                          <i className="fa-solid fa-arrow-right text-light"></i>
-                        </Link>
+                          <path d="M 0,400 L 0,150 C 128,113.19999999999999 256,76.39999999999999 442,97 C 628,117.60000000000001 872,195.60000000000002 1048,214 C 1224,232.39999999999998 1332,191.2 1440,150 L 1440,400 L 0,400 Z"></path>
+                        </svg>
+                        <h5 className="card-title">{blog.metaTitle}</h5>
+                        <div className="d-flex align-items-center">
+                          <p className="card-text">{blog.shortDescription}</p>
+                          <Link
+                            href={`/colouring-pages/${blog.id}`}
+                            className="card_link_btn stretched-link"
+                          >
+                            <i className="fa-solid fa-arrow-right text-light"></i>
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
