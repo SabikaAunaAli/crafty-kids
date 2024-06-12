@@ -225,6 +225,7 @@ const Categories = () => {
           </div>
         </div>
       </div>
+
       <div className="copyright mt-0">
         <div className="container">
           <div className="row">

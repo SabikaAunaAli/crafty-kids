@@ -154,9 +154,10 @@ const Detail = () => {
                           <p>{blogDetail.shortDescription}</p>
                           <div className="d-flex justify-content-center">
                             <img
+                               className="w-75"
                               alt=""
                               src={blogDetail.fullFileUrl}
-                              style={{ height: "350px", width: "500px" }}
+                             
                             />
                           </div>
                           <br />
