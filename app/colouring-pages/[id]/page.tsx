@@ -138,6 +138,15 @@ const Detail = () => {
         </div>
         
       </header>
+
+      <div className="kids-breadcrumb container pb-4  ">
+              <Link href="/">Home</Link> <img alt="" src="/images/brd.svg" />
+              <a className="active" href="/colouring-pages">
+                Colouring Pages
+              </a>
+            </div>
+
+
       {/* Your other JSX content */}
       <div className="craft paper">
         <div className="craft-slider">
