@@ -209,7 +209,7 @@ export default function Home() {
                 />
               </Link>
             </div>
-            <div className="row position-relative">
+            <div className="">
               <img
                 src="/images/triangles.png"
                 className="position-absolute triangles"

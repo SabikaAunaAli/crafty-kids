@@ -65,6 +65,11 @@ const Detail = () => {
       .catch(() => alert("Failed to download image."));
   };
 
+
+
+
+
+
   useEffect(() => {
     const id = pathname.split("/").pop();
     fetchColouringDetails(id);
