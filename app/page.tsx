@@ -333,7 +333,7 @@ export default function Home() {
                 Explore Our Most Popular Coloring Sheets
               </span>
               <div className="view-all">
-                <Link href="/activities">
+                <Link href="/colouring-pages">
                   View All
                   <img
                     src="/images/viewall.svg"
